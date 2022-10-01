@@ -3,9 +3,11 @@
 */
 
 const ERROR_MESSAGE = {
+    401: 'No tiene autorización para esta acción',
     404: 'Usuario o contraseña incorrectos',
-    601: 'Usuario desconocido o no válido',
     409: 'Correo electrónico en uso',
+    601: 'Usuario desconocido o no válido',
+    sessionClosed: 'La sesión se ha cerrado inesperadamente, vuelva a hacer Login',
 }
 
 export { ERROR_MESSAGE };
