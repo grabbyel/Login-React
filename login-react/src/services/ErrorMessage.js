@@ -8,6 +8,8 @@ const ERROR_MESSAGE = {
     409: 'Correo electrónico en uso',
     601: 'Usuario desconocido o no válido',
     sessionClosed: 'La sesión se ha cerrado inesperadamente, vuelva a hacer Login',
+    contextDefault: 'No existe un Contex Provider definido',
+    notDefined: 'Error no contemplado',
 }
 
 export { ERROR_MESSAGE };

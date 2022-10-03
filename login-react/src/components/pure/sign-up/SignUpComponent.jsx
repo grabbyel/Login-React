@@ -1,6 +1,8 @@
 import React from 'react'
 
 export const SignUpComponent = () => {
+
+    // console.log('hola desde signup')
     return (
         <>
             <div className="center-wrap">

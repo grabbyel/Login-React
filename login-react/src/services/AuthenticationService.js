@@ -4,9 +4,9 @@
 */
 import { ERROR_MESSAGE } from './ErrorMessage' // importamos nuestra biblioteca de errores.
 
-
-const urlLogin = 'http://51.38.51.187:5050/api/v1/auth/log-in' // URL de la api donde atacamos para login(endpoint)
-const urlSignUp = 'http://51.38.51.187:5050/api/v1/auth/sign-up' // URL de la api donde atacamos para registro(endpoint)
+const url = 'http://51.38.51.187:5050/api/v1'
+const urlLogin = `${url}/auth/log-in` // URL de la api donde atacamos para login(endpoint)
+const urlSignUp = `${url}/auth/sign-up` // URL de la api donde atacamos para registro(endpoint)
 const header = {
     "Content-type": "application/json"
 }
@@ -38,23 +38,68 @@ const signup = (email, password, name, surname) => {
  *  registrados, lo cual nos devolverá una promesa que deberemos tratar para extraer
  *  los datos que necesitemos.
  */
-const login = (email, password) => {
-    return fetch(
-        urlLogin,
-        {
-            method: "POST",
-            headers: header,
-            body: JSON.stringify({ email, password }),
-        }
-    )
-        .then(response => {
-            if (response.status != 200) {
-                throw new Error(ERROR_MESSAGE[response.status] || errorMessageDefault)
-            }
-            return response.json()
-        }
-        )
+const login = async (email, password) => {
+    console.log('llamando al servicio...')
+
+    const loginHeaders = {
+        method: "POST",
+        headers: header,
+        body: JSON.stringify({ email, password }),
+    }
+
+
+
+    try {
+        const response = await fetch(urlLogin, loginHeaders)
+        if (response.status >= 300) throw new Error(ERROR_MESSAGE[response.status] || errorMessageDefault)
+        const token = await response.json()
+        localStorage.setItem('token', JSON.stringify(token))
+        return token
+    } catch (error) {
+        throw error
+    }
+
+
+
+    // return fetch(
+    //     urlLogin,
+    //     {
+    //         method: "POST",
+    //         headers: header,
+    //         body: JSON.stringify({ email, password }),
+    //     }
+    // )
+    //     .then(response => {
+    //         if (response.status != 200) {
+    //             throw new Error(ERROR_MESSAGE[response.status] || errorMessageDefault)
+    //         }
+    //         return response.json()
+    //     }
+    //     )
+
+
+
+
+    //     fetch()
+    //         .then(response => {
+    //             if (response.status >= 300) throw new Error(ERROR_MESSAGE[response.status] || errorMessageDefault)
+    //             return response
+    //         })
+    //         .then(response => response.json())
+    //         .catch(() => {throw new Error(ERROR_MESSAGE[response.status] || errorMessageDefault)})
+    //     }
+}
+
+const getMe = ({ tokenType, accessToken }) => {
+    const meHeaders = {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json",
+            Authorization: `${tokenType} ${accessToken}`,
+        },
+    }
+    return fetch(`${url}/users/me`, meHeaders).then((response) => response.json())
 }
 
 // Exportamos nuestras funciones, para poder usarlas allá donde necesitemos.
-export { signup, login }
+export { signup, login, getMe }
