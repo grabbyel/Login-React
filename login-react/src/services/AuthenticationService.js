@@ -101,5 +101,9 @@ const getMe = ({ tokenType, accessToken }) => {
     return fetch(`${url}/users/me`, meHeaders).then((response) => response.json())
 }
 
+const logOut = () => {
+    localStorage.removeItem('token')
+}
+
 // Exportamos nuestras funciones, para poder usarlas allá donde necesitemos.
-export { signup, login, getMe }
+export { signup, login, getMe, logOut }

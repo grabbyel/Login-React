@@ -1,22 +1,28 @@
-import React from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../../../context/dataContext'
+
 import './FeedComponent.css'
 
 export const FeedComponent = () => {
 
-    let { user } = useUser()
+    const { user, logOutContext } = useUser()
     const navigateTo = useNavigate()
 
-    console.log(user)
+    // console.log(user)
+
+    useEffect(() => {
+        if (!user) { navigateTo('/home') }
+    }, [user])
+
 
     const handleHome = () => {
-        navigateTo('/home')
+        logOutContext()
     }
     return (
         <div>
             Aquí el FeedComponent donde aparecerá todo
-            <button onClick={handleHome}>A home</button>
+            <button onClick={handleHome}>LogOut</button>
         </div>
     )
 }

@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/home" element={<HomeComponent />} />
         <Route path="/" element={<HomeComponent />} />
-        <Route path="feed" element={<FeedComponent />} />
+        <Route path="/feed" element={<FeedComponent />} />
         <Route path="*" element={<HomeComponent />} />
       </Routes>
     </UserProvider>

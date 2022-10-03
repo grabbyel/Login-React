@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from "react"
-import { getMe } from "../services/AuthenticationService"
+import { createContext, useContext, useEffect, useState } from "react"
+import { getMe, logOut } from "../services/AuthenticationService"
 import { ERROR_MESSAGE } from "../services/ErrorMessage"
 
 
@@ -20,32 +20,38 @@ export const useUser = () => {
 
 export function UserProvider({ children }) {
 
-    // Creamos el dato que vamos a poner a disposición de nuestros componentes.
-    const [user, setUser] = useState()
+    // Creamos los datos que vamos a poner a disposición de nuestros componentes.
+    const [user, setUser] = useState(null)
     const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')))
 
-    // const loginContext = async (email, password) => {
-    //     // login(email, password)
-    //     //     .then(setUser)
-    //     //     .catch(err => {
-    //     //         setUser(undefined)
+    const logOutContext = () => {
+        setToken(null)
+        logOut()
+    }
 
-    //     //  })
 
-    //     try {
-    //         const newUser = await login(email, password)
-    //         setUser(newUser)
-    //     } catch (error) {
-    //         setUser(undefined)
-    //     }
-    // }
 
+    useEffect(() => {
+        const getUserWithToken = async (t) => {
+            try {
+                const me = await getMe(t)
+                setUser(me)
+            } catch (error) {
+                setUser(null)
+            }
+        }
+
+        if (token) {
+            getUserWithToken(token)
+        } else { setUser(null) }
+
+    }, [token])
 
 
     return (
         <>
             <userContext.Provider
-                value={{ user, setUser, token, setToken }}>
+                value={{ user, setUser, token, setToken, logOutContext }}>
                 {children}
             </userContext.Provider>
         </>

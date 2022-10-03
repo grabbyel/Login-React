@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useUser } from '../../../context/dataContext'
 import { useNavigate } from "react-router-dom"
+import { login } from '../../../services/AuthenticationService'
 import './LoginComponent.css'
-import { login, getMe } from '../../../services/AuthenticationService'
 
 export const LoginComponent = () => {
-    const { user, setUser, token, setToken } = useUser() // Nos traemos de dataContex el usuario.
+    const { token, setToken } = useUser() // Nos traemos de dataContex lo necesario.
     const navigateTo = useNavigate()
 
 
@@ -21,13 +21,10 @@ export const LoginComponent = () => {
      */
     const handleLogin = async () => {
         try {
-            const tokenResult = token || await login(email, password)
-            // console.log(tokenResult)
-            const me = await getMe(tokenResult)
-            // console.log(me)
-            setToken(tokenResult)
-            setUser(me)
-            navigateTo('/feed')
+            if (!token) {
+                const tokenResult = await login(email, password)
+                setToken(tokenResult)
+            }
         } catch (error) {
             console.error(error)
         }
