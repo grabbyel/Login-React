@@ -22,7 +22,7 @@ export function UserProvider({ children }) {
     // Creamos los datos que vamos a poner a disposición de nuestros componentes.
     const [user, setUser] = useState(null)
     const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')))
-    const [usersList, setUsersList] = useState([])
+    const [usersList, setUsersList] = useState()
 
     const logOutContext = () => {
         setToken(null)

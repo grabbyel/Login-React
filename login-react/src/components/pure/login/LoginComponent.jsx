@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useDataContext } from '../../../context/dataContext'
 import { useNavigate } from "react-router-dom"
-import { login } from '../../../services/AuthenticationService'
+import { getMe, login } from '../../../services/AuthenticationService'
 import './LoginComponent.css'
+import { getAllUsers } from '../../../services/UsersService'
 
 export const LoginComponent = () => {
-    const { token, setToken } = useDataContext() // Nos traemos de dataContex lo necesario.
+    const { token, setToken, setUsersList, setUser } = useDataContext() // Nos traemos de dataContex lo necesario.
     const navigateTo = useNavigate()
 
 
@@ -24,6 +25,11 @@ export const LoginComponent = () => {
             if (!token) {
                 const tokenResult = await login(email, password)
                 setToken(tokenResult)
+                const list = await getAllUsers(tokenResult)
+                setUsersList(list)
+                console.log(list)
+                const me = await getMe(tokenResult)
+                setUser(me)
             }
         } catch (error) {
             console.error(error)
