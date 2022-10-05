@@ -6,7 +6,7 @@ body {
 	font-weight: 300;
 	font-size: 15px;
 	line-height: 1.7;
-	color: #c4c3ca;
+	color: #c4c3ca !important;
 	background-color: #1f2029;
 	overflow-x: hidden;
 }
@@ -257,6 +257,9 @@ h6 span {
 	background-color: #ffeba7;
 	color: #102770;
 	box-shadow: 0 8px 24px 0 rgba(255, 235, 167, 0.2);
+}
+.btnLogin {
+	background-color: #ffeba7 !important;
 }
 .btn:active,
 .btn:focus {

@@ -18,20 +18,21 @@ let errorMessageDefault = 'Error desconocido en la autenticación de usuario'
 /** Creamos la función de registro de un nuevo usuario, que recoge los datos del formulario, 
  *  hacemos petición fetch a la api con la estructura y el método necesario (en este caso, POST).
  */
-const signup = (email, password, name, surname) => {
-    return fetch(
-        urlSignUp,
-        {
-            method: 'POST',
-            headers: header,
-            body: JSON.stringify({ email, password, name, surname })
-        }
-    )
-        .then(response => {
-            if (response.status === 200) return { message: "Registro de usuario con éxito" }
-            throw new Error(ERROR_MESSAGE[response.status] || errorMessageDefault)
-        }
-        )
+const signup = async (email, password, name, surname) => {
+    const signUpHeaders = {
+        method: 'POST',
+        headers: header,
+        body: JSON.stringify({ email, password, name, surname })
+    }
+
+
+    try {
+        const response = await fetch(urlSignUp, signUpHeaders)
+        if (response.ok) { alert('Usuario creado con éxito') }
+        return response
+    } catch (error) {
+        console.log(error.message)
+    }
 }
 
 /** Creamos la función login, muy similar a la anterior, pero en este caso es para usuarios ya
@@ -48,7 +49,6 @@ const login = async (email, password) => {
     }
 
 
-
     try {
         const response = await fetch(urlLogin, loginHeaders)
         if (response.status >= 300) throw new Error(ERROR_MESSAGE[response.status] || errorMessageDefault)
@@ -58,36 +58,6 @@ const login = async (email, password) => {
     } catch (error) {
         throw error
     }
-
-
-
-    // return fetch(
-    //     urlLogin,
-    //     {
-    //         method: "POST",
-    //         headers: header,
-    //         body: JSON.stringify({ email, password }),
-    //     }
-    // )
-    //     .then(response => {
-    //         if (response.status != 200) {
-    //             throw new Error(ERROR_MESSAGE[response.status] || errorMessageDefault)
-    //         }
-    //         return response.json()
-    //     }
-    //     )
-
-
-
-
-    //     fetch()
-    //         .then(response => {
-    //             if (response.status >= 300) throw new Error(ERROR_MESSAGE[response.status] || errorMessageDefault)
-    //             return response
-    //         })
-    //         .then(response => response.json())
-    //         .catch(() => {throw new Error(ERROR_MESSAGE[response.status] || errorMessageDefault)})
-    //     }
 }
 
 const getMe = ({ tokenType, accessToken }) => {

@@ -5,11 +5,9 @@
  */
 
 import { ERROR_MESSAGE } from './ErrorMessage' // importamos nuestra biblioteca de errores.
-// import { createContext, useState } from "react"
 
 
-const urlGetAllUsers = 'http://51.38.51.187:5050/api/v1/users'
-const urlUserFromId = 'http://51.38.51.187:5050/api/v1/users/'
+const urlUsers = 'http://51.38.51.187:5050/api/v1/users'
 
 let errorMessageDefault = 'Error inesperado al realizar acción'
 
@@ -22,7 +20,7 @@ const getAllUsers = (token) => {
 
     // Creamos la petición fetch a nuestro endpoint con la estructura necesaria.
     return fetch(
-        urlGetAllUsers,
+        urlUsers,
         {
             method: "GET",
             headers: {
@@ -40,5 +38,50 @@ const getAllUsers = (token) => {
         .then(listado => listado.items)
 }
 
-export { getAllUsers }
+const deleteUser = async (token, id) => {
+    const { tokenType, accessToken } = token
+    const credentialsDelete =
+    {
+        method: "DELETE",
+        headers: {
+            "Content-type": "application/json",
+            Authorization: `${tokenType} ${accessToken}`,
+        },
+    }
+
+    try {
+        const resp = await fetch(`${urlUsers}/${id}`, credentialsDelete)
+        console.log(resp)
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
+
+const editUser = async (token, id, userModified) => {
+    const { email, name, surname } = userModified
+    const { tokenType, accessToken } = token
+    const urlEdit = `${urlUsers}/${id}`
+
+    const header = {
+        "Content-type": "application/json",
+        Authorization: `${tokenType} ${accessToken}`,
+    }
+    const credentialsEditUser = {
+        method: 'PUT',
+        headers: header,
+        body: JSON.stringify({ email, name, surname, id })
+    }
+
+
+    try {
+        const response = await fetch(urlEdit, credentialsEditUser)
+        if (response.ok) { alert('Usuario editado con éxito') }
+        return response
+    } catch (error) {
+        console.log(error.message)
+    }
+
+}
+
+export { getAllUsers, deleteUser, editUser }
 

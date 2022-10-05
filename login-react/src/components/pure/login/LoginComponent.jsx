@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { useDataContext } from '../../../context/dataContext'
-import { useNavigate } from "react-router-dom"
 import { getMe, login } from '../../../services/AuthenticationService'
-import './LoginComponent.css'
 import { getAllUsers } from '../../../services/UsersService'
 
+import './LoginComponent.css'
+
+
 export const LoginComponent = () => {
+
     const { token, setToken, setUsersList, setUser } = useDataContext() // Nos traemos de dataContex lo necesario.
-    const navigateTo = useNavigate()
 
 
     const [email, setEmail] = useState('GABRIEL_GALDE@HOTMAIL.COM')
@@ -16,9 +17,8 @@ export const LoginComponent = () => {
     const forgotPass = () => alert('Haz memoria, será el cumpleaños de tu novia 😜')
 
     /**
-     * hacer login para obtener el token
-     * guardar token en localStorage
-     * 
+     * Hacemos login para obtener el token y lo guardamos en localStorage.
+     * Hacemos petición de los datos de usuario logeado.
      */
     const handleLogin = async () => {
         try {
@@ -27,7 +27,6 @@ export const LoginComponent = () => {
                 setToken(tokenResult)
                 const list = await getAllUsers(tokenResult)
                 setUsersList(list)
-                console.log(list)
                 const me = await getMe(tokenResult)
                 setUser(me)
             }
@@ -71,7 +70,7 @@ export const LoginComponent = () => {
                         />
                         <i className="input-icon uil uil-lock-alt"></i>
                     </div>
-                    <button onClick={handleLogin} className="btn mt-4">submit</button>
+                    <button onClick={handleLogin} className="btn btnLogin mt-4">submit</button>
                     <p className="mb-0 mt-4 text-center">
                         <a onClick={forgotPass} className="link">
                             Has olvidado tu contraseña?
