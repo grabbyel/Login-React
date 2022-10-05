@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { useUser } from '../../../context/dataContext'
+import { useDataContext } from '../../../context/dataContext'
 import { useNavigate } from "react-router-dom"
 import { login } from '../../../services/AuthenticationService'
 import './LoginComponent.css'
 
 export const LoginComponent = () => {
-    const { token, setToken } = useUser() // Nos traemos de dataContex lo necesario.
+    const { token, setToken } = useDataContext() // Nos traemos de dataContex lo necesario.
     const navigateTo = useNavigate()
 
 

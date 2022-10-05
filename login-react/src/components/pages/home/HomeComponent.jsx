@@ -1,14 +1,14 @@
 import { SignUpComponent } from '../../pure/sign-up/SignUpComponent'
 import { LoginComponent } from '../../pure/login/LoginComponent'
 import { useEffect } from 'react'
-import { useUser } from '../../../context/dataContext'
+import { useDataContext } from '../../../context/dataContext'
 import { useNavigate } from 'react-router-dom'
 
 import './HomeComponent.css'
 
 export const HomeComponent = () => {
     const forgotPass = () => alert('Haz memoria, será el cumpleaños de tu novia')
-    const { user } = useUser()
+    const { user } = useDataContext()
     const navigate = useNavigate()
 
     useEffect(() => {

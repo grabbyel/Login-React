@@ -40,3 +40,5 @@ const getAllUsers = (token) => {
         .then(listado => listado.items)
 }
 
+export { getAllUsers }
+

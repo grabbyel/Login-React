@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useUser } from '../../../context/dataContext'
+import { useDataContext } from '../../../context/dataContext'
 
 import './FeedComponent.css'
 
 export const FeedComponent = () => {
 
-    const { user, logOutContext } = useUser()
+    const { user, logOutContext } = useDataContext()
     const navigateTo = useNavigate()
 
     // console.log(user)
