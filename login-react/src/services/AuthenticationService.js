@@ -28,7 +28,6 @@ const signup = async (email, password, name, surname) => {
 
     try {
         const response = await fetch(urlSignUp, signUpHeaders)
-        if (response.ok) { alert('Usuario creado con éxito') }
         return response
     } catch (error) {
         console.log(error.message)

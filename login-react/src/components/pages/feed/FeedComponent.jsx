@@ -7,6 +7,7 @@ import { UserCardComponent } from '../../pure/userCard/UserCardComponent'
 import { getMe } from '../../../services/AuthenticationService'
 
 import './FeedComponent.css'
+import EditModalComponent from '../../pure/editModal/EditModalComponent'
 
 export const FeedComponent = () => {
 
@@ -17,7 +18,9 @@ export const FeedComponent = () => {
         usersList,
         setUsersList,
         token,
-        modalShow
+        modalShow,
+        setModalShow,
+        idModal,
     } = useDataContext()
     const navigateTo = useNavigate()
 
@@ -50,27 +53,48 @@ export const FeedComponent = () => {
         logOutContext()
     }
     return (
-        <div className='container-fluid' style={{ color: 'whitesmoke' }}>
-            <div className='align-items-center'>
-                {user && <div style={{ position: 'fixed' }} >{`Bienvenido, ${user.name}`}</div>}
-                <button
-                    onClick={handleHome}
-                    className='btn btn-dark btnLogOut  btn-sm m-2'
+        <>
+            {user &&
+                <div className='headerFeed' >
+                    <p>{`Bienvenido, ${user.name}`}</p>
+                    <p className='mx-3'>
+                        {usersList && `   Hay ${usersList.length} usuarios registrados`}
+                    </p>
+                    <button
+                        onClick={handleHome}
+                        className='btn btn-dark btnLogOut btn-sm m-2'
+                    >
+                        logout
+                    </button>
+
+                </div>}
+            <div className='container-fluid' style={{ color: 'whitesmoke' }}>
+                {/* <div className='align-items-center'> */}
+                {/* </div> */}
+                {/* {usersList &&
+                    <div>
+                        {`Hay ${usersList.length} usuarios registrados`}
+                    </div>
+                } */}
+                {modalShow && <EditModalComponent
+                    show={modalShow}
+                    userID={idModal}
+                    onHide={() => setModalShow(false)}
+                />}
+                <div
+                    className='row justify-content-center mt-5'
+                    style={{ overflow: 'hidden' }}
                 >
-                    logout
-                </button>
-            </div>
-            {usersList &&
-                <div>
-                    {`Hay ${usersList.length} usuarios registrados`}
+                    {usersList && usersList.map((item) =>
+                        <UserCardComponent
+                            user={item}
+                            key={item.email}
+                            userID={item.id}
+                        />
+                    )}
                 </div>
-            }
-            <div className='row justify-content-center'>
-                {usersList && usersList.map((item) =>
-                    <UserCardComponent user={item} key={item.id} />
-                )}
             </div>
-        </div>
+        </>
     )
 }
 

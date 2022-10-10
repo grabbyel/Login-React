@@ -24,6 +24,7 @@ export function UserProvider({ children }) {
     const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')))
     const [usersList, setUsersList] = useState()
     const [modalShow, setModalShow] = useState(false)
+    const [idModal, setIdModal] = useState('')
 
     const logOutContext = () => {
         setToken(null)
@@ -60,7 +61,9 @@ export function UserProvider({ children }) {
                     usersList,
                     setUsersList,
                     modalShow,
-                    setModalShow
+                    setModalShow,
+                    idModal,
+                    setIdModal
                 }}>
                 {children}
             </userContext.Provider>

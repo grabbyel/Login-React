@@ -15,14 +15,14 @@ export const SignUpComponent = () => {
     const handleSignUpEmail = (e) => setEmail(e.target.value)
     const handleSignUpPassword = (e) => setPassword(e.target.value)
 
-    const handleSignUp = () => {
-        signup(signUpEmail, signUpPassword, signUpName, signUpSurname)
-            .then(response => {
-                console.log(response)
-                if (response.status !== 200) {
-                    alert(ERROR_MESSAGE[response.status])
-                } else alert('usuario creado con exito')
-            })
+    const handleSignUp = async () => {
+        const response = await signup(signUpEmail, signUpPassword, signUpName, signUpSurname)
+        console.log(response)
+        // cambiamos diferente de 200 por mayor de 300 para que no devuelva alert por respuesta vacía
+        if (response.status >= 300) {
+            alert(ERROR_MESSAGE[response.status])
+        } else alert('usuario creado con exito')
+
     }
 
 

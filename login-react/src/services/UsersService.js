@@ -57,8 +57,8 @@ const deleteUser = async (token, id) => {
     }
 }
 
-const editUser = async (token, id, userModified) => {
-    const { email, name, surname } = userModified
+const editUser = async (token, userModified) => {
+    const { email, name, surname, id } = userModified
     const { tokenType, accessToken } = token
     const urlEdit = `${urlUsers}/${id}`
 

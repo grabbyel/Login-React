@@ -6,17 +6,20 @@ import { useState } from 'react'
 import { editUser } from '../../../services/UsersService'
 import { useDataContext } from '../../../context/dataContext'
 
-const EditModalComponent = ({ show, onHide, user }) => {
+const EditModalComponent = ({ show, userID, onHide }) => {
     const [newName, setNewName] = useState('')
     const [newSurname, setNewSurname] = useState('')
     const [newEmail, setNewEmail] = useState('')
 
     const { token } = useDataContext()
 
+    console.log(`La id a EDITAR es : ${userID}`)
+
     const newUserDates = {
         name: newName,
         surname: newSurname,
-        email: newEmail
+        email: newEmail,
+        id: userID
     }
 
 
@@ -36,8 +39,8 @@ const EditModalComponent = ({ show, onHide, user }) => {
     }
 
     const handleEditUser = async () => {
-        console.log(user.id)
-        const response = await editUser(token, user.id, newUserDates)
+        console.log(userID)
+        const response = await editUser(token, newUserDates)
         console.log(response)
         if (response) {
             setNewName('')
@@ -55,7 +58,7 @@ const EditModalComponent = ({ show, onHide, user }) => {
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-            <Modal.Header closeButton>
+            <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter">
                     Modal heading
                 </Modal.Title>

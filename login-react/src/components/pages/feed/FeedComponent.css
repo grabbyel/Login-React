@@ -1,3 +1,11 @@
 .btnLogOut {
 	background-color: brown;
 }
+.headerFeed {
+	display: flex;
+	flex-direction: row;
+	background-color: coral;
+	position: fixed;
+	width: 100%;
+	overflow: hidden;
+}

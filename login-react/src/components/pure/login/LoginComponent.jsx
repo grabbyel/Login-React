@@ -70,7 +70,7 @@ export const LoginComponent = () => {
                         />
                         <i className="input-icon uil uil-lock-alt"></i>
                     </div>
-                    <button onClick={handleLogin} className="btn btnLogin mt-4">submit</button>
+                    <button onClick={handleLogin} className="btn btnLogin mt-4">Login</button>
                     <p className="mb-0 mt-4 text-center">
                         <a onClick={forgotPass} className="link">
                             Has olvidado tu contraseña?
