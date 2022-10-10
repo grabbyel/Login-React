@@ -35,7 +35,9 @@ export const UserCardComponent = ({ user }) => {
     const handleEdit = ({ target: { id } }) => {
         // console.log(id)
         setModalShow(true)
-        setIdModal(id)
+        let userEdit = usersList.filter((item) => item.id === id)
+        console.log(userEdit[0])
+        setIdModal(userEdit[0])
 
     }
 
@@ -50,20 +52,15 @@ export const UserCardComponent = ({ user }) => {
                     <p>{`ID: ${id}`}</p>
 
                 </div>
-                <div className='d-flex actionBtn'>
+                <div className='d-flex actionBtn align-content-center'>
 
-                    <Button variant="primary" onClick={handleEdit} id={user.id}>
-                        Editar {user.name}
+                    <Button className='m-1' variant="primary" onClick={handleEdit} id={user.id}>
+                        Editar
                     </Button>
 
-                    {/* {modalShow &&
-                        <EditModalComponent
-                            show={modalShow}
-                            userID={user}
-                            onHide={() => setModalShow(false)}
-                        />} */}
-
-                    <button className="btn btn-dark m-1" onClick={handleDeleteUser}>Eliminar</button>
+                    <Button className='m-1' variant='danger' onClick={handleDeleteUser}>
+                        Eliminar
+                    </Button>
                 </div>
             </div>
         </div>

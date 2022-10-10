@@ -6,20 +6,20 @@ import { useState } from 'react'
 import { editUser } from '../../../services/UsersService'
 import { useDataContext } from '../../../context/dataContext'
 
-const EditModalComponent = ({ show, userID, onHide }) => {
+const EditModalComponent = ({ show, userToEdit, onHide }) => {
     const [newName, setNewName] = useState('')
     const [newSurname, setNewSurname] = useState('')
     const [newEmail, setNewEmail] = useState('')
 
     const { token } = useDataContext()
 
-    console.log(`La id a EDITAR es : ${userID}`)
+    console.log(`La id a EDITAR es : ${userToEdit.id}`)
 
     const newUserDates = {
         name: newName,
         surname: newSurname,
         email: newEmail,
-        id: userID
+        id: userToEdit.id
     }
 
 
@@ -39,7 +39,7 @@ const EditModalComponent = ({ show, userID, onHide }) => {
     }
 
     const handleEditUser = async () => {
-        console.log(userID)
+        console.log(userToEdit)
         const response = await editUser(token, newUserDates)
         console.log(response)
         if (response) {
@@ -60,32 +60,37 @@ const EditModalComponent = ({ show, userID, onHide }) => {
         >
             <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Modal heading
+                    Editando usuario
+                    <span
+                        style={{ fontWeight: 'bold', color: 'black' }}
+                    >
+                        {userToEdit.name}
+                    </span>
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form.Group id="EditForm">
 
-                    <Form.Label>Name</Form.Label>
+                    <Form.Label>Nuevo Nombre: </Form.Label>
                     <Form.Control
                         type='text'
-                        // placeholder={user.name}
+                        placeholder={userToEdit.name}
                         value={newName}
                         onChange={handleNewName}
                     />
 
-                    <Form.Label>Surname</Form.Label>
+                    <Form.Label>Nuevo Apellido: </Form.Label>
                     <Form.Control
                         type='text'
-                        // placeholder={user.surname}
+                        placeholder={userToEdit.surname}
                         value={newSurname}
                         onChange={handleNewSurname}
                     />
 
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label>Nuevo Email: </Form.Label>
                     <Form.Control
                         type='email'
-                        // placeholder={user.email}
+                        placeholder={userToEdit.email}
                         value={newEmail}
                         onChange={handleNewEmail}
 
@@ -93,7 +98,9 @@ const EditModalComponent = ({ show, userID, onHide }) => {
 
 
                     <Button
-                        onClick={handleEditUser}>
+                        onClick={handleEditUser}
+                        className='mt-2'
+                    >
                         Save
                     </Button>
                 </Form.Group>

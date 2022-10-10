@@ -78,7 +78,7 @@ export const FeedComponent = () => {
                 } */}
                 {modalShow && <EditModalComponent
                     show={modalShow}
-                    userID={idModal}
+                    userToEdit={idModal}
                     onHide={() => setModalShow(false)}
                 />}
                 <div
