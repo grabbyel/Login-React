@@ -45,6 +45,8 @@ export const FeedComponent = () => {
     }, [user])
 
     useEffect(() => {
+        console.log(usersList)
+        console.log('se ha renderizado al cambiar userslist')
     }, [usersList])
 
 

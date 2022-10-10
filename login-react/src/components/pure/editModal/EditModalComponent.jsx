@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import { useState } from 'react'
-import { editUser } from '../../../services/UsersService'
+import { editUser, getAllUsers } from '../../../services/UsersService'
 import { useDataContext } from '../../../context/dataContext'
 
 const EditModalComponent = ({ show, userToEdit, onHide }) => {
@@ -11,9 +11,9 @@ const EditModalComponent = ({ show, userToEdit, onHide }) => {
     const [newSurname, setNewSurname] = useState('')
     const [newEmail, setNewEmail] = useState('')
 
-    const { token } = useDataContext()
+    const { token, setUsersList } = useDataContext()
 
-    console.log(`La id a EDITAR es : ${userToEdit.id}`)
+    // console.log(`La id a EDITAR es : ${userToEdit.id}`)
 
     const newUserDates = {
         name: newName,
@@ -41,8 +41,10 @@ const EditModalComponent = ({ show, userToEdit, onHide }) => {
     const handleEditUser = async () => {
         console.log(userToEdit)
         const response = await editUser(token, newUserDates)
-        console.log(response)
         if (response) {
+            const newList = await getAllUsers(token)
+            console.log(newList)
+            setUsersList(newList)
             setNewName('')
             setNewSurname('')
             setNewEmail('')
