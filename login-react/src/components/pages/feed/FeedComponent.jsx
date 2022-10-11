@@ -1,13 +1,12 @@
-import { async } from '@firebase/util'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDataContext } from '../../../context/dataContext'
 import { getAllUsers } from '../../../services/UsersService'
 import { UserCardComponent } from '../../pure/userCard/UserCardComponent'
 import { getMe } from '../../../services/AuthenticationService'
+import EditModalComponent from '../../pure/editModal/EditModalComponent'
 
 import './FeedComponent.css'
-import EditModalComponent from '../../pure/editModal/EditModalComponent'
 
 export const FeedComponent = () => {
 
@@ -25,19 +24,18 @@ export const FeedComponent = () => {
     const navigateTo = useNavigate()
 
 
+    const initialPetitions = async () => {
+        const list = await getAllUsers(token)
+        const me = await getMe(token)
+        setUsersList(list)
+        setUser(me)
+    }
+
+
     useEffect(() => {
-        if (token) {
-            getAllUsers(token)
-                .then(response => response)
-                .then(data => {
-                    setUsersList(data)
-                })
-            getMe(token)
-                .then(response => response)
-                .then(response => {
-                    setUser(response)
-                })
-        } else navigateTo('/home')
+        (token)
+            ? initialPetitions()
+            : navigateTo('/home')
     }, [])
 
     useEffect(() => {
@@ -45,8 +43,6 @@ export const FeedComponent = () => {
     }, [user])
 
     useEffect(() => {
-        console.log(usersList)
-        console.log('se ha renderizado al cambiar userslist')
     }, [usersList])
 
 
