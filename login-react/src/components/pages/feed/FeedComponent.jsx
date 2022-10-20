@@ -74,22 +74,26 @@ export const FeedComponent = () => {
                         {`Hay ${usersList.length} usuarios registrados`}
                     </div>
                 } */}
-                {modalShow && <EditModalComponent
-                    show={modalShow}
-                    userToEdit={idModal}
-                    onHide={() => setModalShow(false)}
-                />}
+                {modalShow &&
+                    <EditModalComponent
+                        show={modalShow}
+                        userToEdit={idModal}
+                        onHide={() => setModalShow(false)}
+                    />
+                }
                 <div
                     className='row justify-content-center mt-5'
                     style={{ overflow: 'hidden' }}
                 >
-                    {usersList && usersList.map((item) =>
-                        <UserCardComponent
-                            user={item}
-                            key={item.email}
-                            userID={item.id}
-                        />
-                    )}
+                    {usersList &&
+                        usersList.map((item) =>
+                            <UserCardComponent
+                                user={item}
+                                key={item.email}
+                                userID={item.id}
+                            />
+                        )
+                    }
                 </div>
             </div>
         </>
